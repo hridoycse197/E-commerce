@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'src/services/hive_service.dart';
 import 'src/views/loading_screen.dart';
 
-void main() {
+void main() async {WidgetsFlutterBinding.ensureInitialized();
+  await Get.put(HiveService()).onInitForApp();
   runApp(const MyApp());
 }
 
