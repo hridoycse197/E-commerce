@@ -16,17 +16,19 @@ class LoadingScreen extends StatelessWidget with Base {
     return Scaffold(
         backgroundColor: Colors.black,
         body: SafeArea(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/giphy.gif',
-                height: 50,
-                width: 50,
-              ),
-              Ktext(text: 'Loading.....', fontColor: Colors.white),
-            ],
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/giphy.gif',
+                  height: 50,
+                  width: 50,
+                ),
+                Ktext(text: 'Loading.....', fontColor: Colors.white),
+              ],
+            ),
           ),
         ));
   }
