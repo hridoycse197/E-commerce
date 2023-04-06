@@ -8,8 +8,6 @@ import '../config/base.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_text_widget.dart';
 import 'dash_board.dart';
-import 'set_profile_screen.dart';
-
 class ProductDescriptionScreen extends StatelessWidget with Base {
   ProductDescriptionScreen({super.key});
 
