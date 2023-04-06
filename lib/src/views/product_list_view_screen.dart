@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:leadsecommerce/src/views/product_description_screen.dart';
 import 'package:leadsecommerce/src/widgets/vertical_space_widget.dart';
 import '../config/base.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_text_widget.dart';
 import 'set_profile_screen.dart';
 
@@ -11,34 +13,8 @@ class ProductListViewScreen extends StatelessWidget with Base {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 30,
-                width: 30,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(image: MemoryImage(productC.image.value!)),
-                ),
-              )),
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(left: 2.0),
-              child: GestureDetector(
-                  onTap: () {
-                    productC.image.value = productC.userBox.get('loggedIn')!.images;
-                    productC.userName.value = productC.userBox.get('loggedIn')!.name!;
-                    Get.to(() => SetProfileScreen());
-                  },
-                  child: const Icon(Icons.edit)),
-            ),
-          ],
-          elevation: 5,
-          backgroundColor: Color.fromARGB(255, 165, 184, 241),
-          title: Ktext(text: 'Hridoy', fontColor: Colors.white),
-        ),
-        backgroundColor: Color.fromARGB(255, 165, 184, 241),
+       appBar: PreferredSize(child: CustomAppbar(), preferredSize: Size.fromHeight(kToolbarHeight)),
+      backgroundColor: Color.fromARGB(255, 165, 184, 241),
         body: SafeArea(
           child: Obx(
             () => productC.allProducts[productC.allProducts.indexWhere((element) => element.catName == productC.selectedCatName.value)]
@@ -67,29 +43,17 @@ class ProductListViewScreen extends StatelessWidget with Base {
                                               children: [
                                                 SpaceHorizontal(horizontal: 10),
                                                 Container(
-                                                  color: Colors.white,
                                                   height: 200,
                                                   width: 120,
-                                                  child: ListView.builder(
-                                                    scrollDirection: Axis.horizontal,
-                                                    shrinkWrap: true,
-                                                    itemCount: x.images.length,
-                                                    itemBuilder: (context, index) => Padding(
-                                                      padding: const EdgeInsets.all(4.0),
-                                                      child: Container(
-                                                        decoration: BoxDecoration(
-                                                            image: DecorationImage(
-                                                                fit: BoxFit.contain, image: NetworkImage(x.images[index]))),
-                                                        height: 200,
-                                                        width: 120,
-                                                      ),
-                                                    ),
-                                                  ),
+                                                  decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      image: DecorationImage(fit: BoxFit.contain, image: NetworkImage(x.thumbnail))),
                                                 ),
                                                 SpaceHorizontal(horizontal: 20),
                                                 SizedBox(
                                                   width: Get.width * .46,
-                                                  child: Column(
+                                                  child: 
+                                                  Column(
                                                     mainAxisAlignment: MainAxisAlignment.start,
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
@@ -129,7 +93,10 @@ class ProductListViewScreen extends StatelessWidget with Base {
                                                         ],
                                                       ),
                                                       ElevatedButton(
-                                                          onPressed: () {},
+                                                          onPressed: () {
+                                                            productC.selectedProduct.value = x;
+                                                            Get.to(() => ProductDescriptionScreen());
+                                                          },
                                                           child: Ktext(
                                                             text: 'BUY NOW',
                                                             fontColor: Colors.white,

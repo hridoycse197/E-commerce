@@ -10,7 +10,8 @@ class Ktext extends StatelessWidget {
   final int? maxLines;
   final bool? bold;
 
-  Ktext({this.textDecoration=TextDecoration.none,
+  Ktext({
+    this.textDecoration = TextDecoration.none,
     required this.text,
     this.fontColor,
     this.bold = false,
@@ -28,7 +29,7 @@ class Ktext extends StatelessWidget {
       style: TextStyle(
         decoration: textDecoration,
         fontSize: fontSize != null ? fontSize! : 14,
-        fontFamily: bold! ? 'Manrope Bold' : 'Manrope Regular',
+        fontWeight: bold! ? FontWeight.bold : FontWeight.normal,
         color: fontColor ?? Colors.black,
       ),
       maxLines: maxLines,

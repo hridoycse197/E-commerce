@@ -7,6 +7,7 @@ import 'package:leadsecommerce/src/views/set_profile_screen.dart';
 import 'package:leadsecommerce/src/widgets/k_log.dart';
 import 'package:leadsecommerce/src/widgets/vertical_space_widget.dart';
 import '../config/base.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/custom_text_widget.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -18,34 +19,8 @@ class DashboardScreen extends StatelessWidget with Base {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          actions: [
-            Padding(
-              padding: const EdgeInsets.only(left: 2.0),
-              child: GestureDetector(
-                  onTap: () {
-                    productC.image.value = productC.userBox.get('loggedIn')!.images;
-                    productC.userName.value = productC.userBox.get('loggedIn')!.name!;
-                    Get.to(() => SetProfileScreen());
-                  },
-                  child: const Icon(Icons.edit)),
-            ),
-          ],
-          elevation: 5,
-          leading: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                height: 30,
-                width: 30,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(image: MemoryImage(productC.image.value!)),
-                ),
-              )),
-          backgroundColor: Color.fromARGB(255, 165, 184, 241),
-          title: Ktext(text: productC.userName.value, fontColor: Colors.white),
-        ),
-        backgroundColor: Color.fromARGB(255, 165, 184, 241),
+       appBar: PreferredSize(child: CustomAppbar(), preferredSize: Size.fromHeight(kToolbarHeight)),
+      backgroundColor: Color.fromARGB(255, 165, 184, 241),
         body: SafeArea(
           child: Obx(
             () => productC.allCategories.isEmpty

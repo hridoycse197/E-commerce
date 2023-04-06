@@ -1,5 +1,3 @@
-import 'dart:developer';
-import "package:collection/collection.dart";
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -16,12 +14,18 @@ import '../views/dash_board.dart';
 class ProductController extends GetxController with ApiServices {
   final isLoading = RxBool(true);
   final allCategories = RxList<String>([]);
-  final selectedCatName = Rx<String>('');  final textEditingText = Rx<String>('');
+  final selectedCatName = Rx<String>('');
+
+  final selectedProduct = Rx<ProductModel?>(null);
+  final cartProducts = RxList<CartProductModel?>([]);
+  final textEditingText = Rx<String>('');
+  final total = Rx<String>('');
   late Box<User> userBox;
   final allProducts = RxList<ProductsCatModel>([]);
   final selectedProductList = RxList<ProductModel>([]);
   final image = Rx<Uint8List?>(null);
-  final userName = Rx<String>(''); final text =Rx< TextEditingController?>(null);
+  final userName = Rx<String>('');
+  final text = Rx<TextEditingController?>(null);
   @override
   void onReady() {
     userBox = Hive.box<User>('user');
@@ -29,6 +33,14 @@ class ProductController extends GetxController with ApiServices {
     if (allProducts.isEmpty) {
       getAllCategories();
     }
+  }
+
+  totalPrice() {
+    double x = 0;
+    for (var element in cartProducts) {
+      x = x + (element!.price * element.quantity);
+    }
+    total.value = x.toString();
   }
 
   getAllCategories() async {

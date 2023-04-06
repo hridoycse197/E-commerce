@@ -70,3 +70,21 @@ class ProductModel {
         "images": List<dynamic>.from(images.map((x) => x)),
       };
 }
+
+class CartProductModel {
+  CartProductModel({
+    required this.id,
+    required this.quantity,
+    required this.title,
+    required this.price,
+    required this.brand,
+    required this.thumbnail,
+  });
+
+  int id;
+  int quantity;
+  String title;
+  String brand;
+  int price;
+  String thumbnail;
+}
