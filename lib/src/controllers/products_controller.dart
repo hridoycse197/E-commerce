@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -14,6 +16,7 @@ import '../views/dash_board.dart';
 class ProductController extends GetxController with ApiServices {
   final isLoading = RxBool(true);
   final allCategories = RxList<String>([]);
+  final allCategoriesList = RxList<String>([]);
   final selectedCatName = Rx<String>('');
 
   final selectedProduct = Rx<ProductModel?>(null);
@@ -27,11 +30,11 @@ class ProductController extends GetxController with ApiServices {
   final userName = Rx<String>('');
   final text = Rx<TextEditingController?>(null);
   @override
-  void onReady() {
+  void onReady() async {
     userBox = Hive.box<User>('user');
     super.onInit();
     if (allProducts.isEmpty) {
-      getAllCategories();
+      await getAllCategories();
     }
   }
 
@@ -57,7 +60,10 @@ class ProductController extends GetxController with ApiServices {
         }
         print(allCategories.length);
         allProducts.clear();
+        allCategoriesList.clear();
         await recall();
+      } else {
+        getAllCategories();
       }
 
       //  offAll(ProjectDashboardv1());
@@ -97,10 +103,14 @@ class ProductController extends GetxController with ApiServices {
         if (allProducts.isNotEmpty) {
           if (allProducts.any((element) => element.catName == cat)) {
           } else {
-            allProducts.add(ProductsCatModel(catName: cat, productList: productList));
+            allCategoriesList.add(cat);
+            allProducts
+                .add(ProductsCatModel(catName: cat, productList: productList));
           }
         } else {
-          allProducts.add(ProductsCatModel(catName: cat, productList: productList));
+          allCategoriesList.add(cat);
+          allProducts
+              .add(ProductsCatModel(catName: cat, productList: productList));
         }
         kLog(allProducts.length);
       }
